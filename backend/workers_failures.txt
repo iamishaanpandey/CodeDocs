@@ -1,0 +1,131 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.10.11, pytest-9.0.2, pluggy-1.6.0 -- C:\Users\Music\.gemini\antigravity\playground\prime-pulsar\backend\venv\Scripts\python.exe
+cachedir: .pytest_cache
+rootdir: C:\Users\Music\.gemini\antigravity\playground\prime-pulsar\backend
+configfile: pytest.ini
+plugins: anyio-4.12.1, Faker-40.8.0, langsmith-0.7.17, asyncio-1.3.0, cov-7.0.0, mock-3.15.1
+asyncio: mode=auto, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 9 items
+
+tests/unit/test_workers_and_git.py::test_process_webhook_task PASSED     [ 11%]
+tests/unit/test_workers_and_git.py::test_process_repository_invalid_uuid PASSED [ 22%]
+tests/unit/test_workers_and_git.py::test_process_repository_not_found FAILED [ 33%]
+tests/unit/test_workers_and_git.py::test_process_repository_success FAILED [ 44%]
+tests/unit/test_workers_and_git.py::test_process_repository_exception FAILED [ 55%]
+tests/unit/test_workers_and_git.py::test_process_repository_task_wrapper PASSED [ 66%]
+tests/unit/test_workers_and_git.py::test_git_service_clone FAILED        [ 77%]
+tests/unit/test_workers_and_git.py::test_git_service_get_files FAILED    [ 88%]
+tests/unit/test_workers_and_git.py::test_git_service_cleanup FAILED      [100%]
+
+================================== FAILURES ===================================
+______________________ test_process_repository_not_found ______________________
+app\workers\tasks.py:22: in _process_repository
+    job.status = "cloning"
+E   AttributeError: 'coroutine' object has no attribute 'status'
+
+During handling of the above exception, another exception occurred:
+tests\unit\test_workers_and_git.py:21: in test_process_repository_not_found
+    await _process_repository(str(uuid.uuid4()), "http://test")
+app\workers\tasks.py:37: in _process_repository
+    job.status = "failed"
+E   AttributeError: 'coroutine' object has no attribute 'status'
+_______________________ test_process_repository_success _______________________
+app\workers\tasks.py:22: in _process_repository
+    job.status = "cloning"
+E   AttributeError: 'coroutine' object has no attribute 'status'
+
+During handling of the above exception, another exception occurred:
+tests\unit\test_workers_and_git.py:35: in test_process_repository_success
+    await _process_repository(str(uuid.uuid4()), "http://test")
+app\workers\tasks.py:37: in _process_repository
+    job.status = "failed"
+E   AttributeError: 'coroutine' object has no attribute 'status'
+______________________ test_process_repository_exception ______________________
+app\workers\tasks.py:22: in _process_repository
+    job.status = "cloning"
+E   AttributeError: 'coroutine' object has no attribute 'status'
+
+During handling of the above exception, another exception occurred:
+tests\unit\test_workers_and_git.py:49: in test_process_repository_exception
+    await _process_repository(str(uuid.uuid4()), "http://test")
+app\workers\tasks.py:37: in _process_repository
+    job.status = "failed"
+E   AttributeError: 'coroutine' object has no attribute 'status'
+___________________________ test_git_service_clone ____________________________
+tests\unit\test_workers_and_git.py:58: in test_git_service_clone
+    with patch('app.services.git_service.Repo.clone_from') as mock_clone:
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\lib\unittest\mock.py:1431: in __enter__
+    self.target = self.getter()
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\lib\unittest\mock.py:1618: in <lambda>
+    getter = lambda: _importer(target)
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\lib\unittest\mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\lib\unittest\mock.py:1250: in _dot_lookup
+    __import__(import_path)
+E   ModuleNotFoundError: No module named 'app.services.git_service.Repo'; 'app.services.git_service' is not a package
+_________________________ test_git_service_get_files __________________________
+tests\unit\test_workers_and_git.py:65: in test_git_service_get_files
+    with patch('app.services.git_service.os.walk') as mock_walk:
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\lib\unittest\mock.py:1431: in __enter__
+    self.target = self.getter()
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\lib\unittest\mock.py:1618: in <lambda>
+    getter = lambda: _importer(target)
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\lib\unittest\mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\lib\unittest\mock.py:1250: in _dot_lookup
+    __import__(import_path)
+E   ModuleNotFoundError: No module named 'app.services.git_service.os'; 'app.services.git_service' is not a package
+__________________________ test_git_service_cleanup ___________________________
+tests\unit\test_workers_and_git.py:75: in test_git_service_cleanup
+    with patch('app.services.git_service.os.path.exists', return_value=True):
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\lib\unittest\mock.py:1431: in __enter__
+    self.target = self.getter()
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\lib\unittest\mock.py:1618: in <lambda>
+    getter = lambda: _importer(target)
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\lib\unittest\mock.py:1261: in _importer
+    thing = _dot_lookup(thing, comp, import_path)
+C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.10_3.10.3056.0_x64__qbz5n2kfra8p0\lib\unittest\mock.py:1250: in _dot_lookup
+    __import__(import_path)
+E   ModuleNotFoundError: No module named 'app.services.git_service.os'; 'app.services.git_service' is not a package
+============================== warnings summary ===============================
+app\core\config.py:4
+  C:\Users\Music\.gemini\antigravity\playground\prime-pulsar\backend\app\core\config.py:4: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class Settings(BaseSettings):
+
+app\schemas\auth.py:14
+  C:\Users\Music\.gemini\antigravity\playground\prime-pulsar\backend\app\schemas\auth.py:14: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class UserResponse(BaseModel):
+
+app\api\routes\repos.py:20
+  C:\Users\Music\.gemini\antigravity\playground\prime-pulsar\backend\app\api\routes\repos.py:20: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class RepoResponse(BaseModel):
+
+app\api\routes\jobs.py:16
+  C:\Users\Music\.gemini\antigravity\playground\prime-pulsar\backend\app\api\routes\jobs.py:16: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class JobResponse(BaseModel):
+
+app\api\routes\docs.py:15
+  C:\Users\Music\.gemini\antigravity\playground\prime-pulsar\backend\app\api\routes\docs.py:15: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class DocResponse(BaseModel):
+
+app\api\routes\docs.py:41
+  C:\Users\Music\.gemini\antigravity\playground\prime-pulsar\backend\app\api\routes\docs.py:41: FastAPIDeprecationWarning: `regex` has been deprecated, please use `pattern` instead
+    sort_by: str = Query("name", regex="^(name|complexity)$"),
+
+app\api\routes\security.py:15
+  C:\Users\Music\.gemini\antigravity\playground\prime-pulsar\backend\app\api\routes\security.py:15: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class SecurityFlagResponse(BaseModel):
+
+app\api\routes\search.py:25
+  C:\Users\Music\.gemini\antigravity\playground\prime-pulsar\backend\app\api\routes\search.py:25: FastAPIDeprecationWarning: `regex` has been deprecated, please use `pattern` instead
+    type: str = Query("both", regex="^(fulltext|semantic|both)$"),
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/unit/test_workers_and_git.py::test_process_repository_not_found
+FAILED tests/unit/test_workers_and_git.py::test_process_repository_success - ...
+FAILED tests/unit/test_workers_and_git.py::test_process_repository_exception
+FAILED tests/unit/test_workers_and_git.py::test_git_service_clone - ModuleNot...
+FAILED tests/unit/test_workers_and_git.py::test_git_service_get_files - Modul...
+FAILED tests/unit/test_workers_and_git.py::test_git_service_cleanup - ModuleN...
+=================== 6 failed, 3 passed, 8 warnings in 1.30s ===================
