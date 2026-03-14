@@ -34,6 +34,8 @@ tree-sitter-rust
 tree-sitter-ruby
 tree-sitter-php
 tree-sitter-c-sharp
+tree-sitter-javascript
+tree-sitter-typescript
 # Enterprise additions
 pgvector>=0.3.6
 google-generativeai>=0.8.0
